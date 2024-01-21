@@ -1,0 +1,35 @@
+<RCC>
+  <qresource prefix="image">
+    <file>../imagens/voltar1.png</file>
+    <file>../imagens/menu-bar (1).png</file>
+    <file>../imagens/mais (2).png</file>
+    <file>../imagens/calendario.png</file>
+    <file>../imagens/Delete.png</file>
+    <file>../imagens/Save.32.png</file>
+    <file>../imagens/book.png</file>
+    <file>../imagens/cadastro.png</file>
+    <file>../imagens/cade.png</file>
+    <file>../imagens/car.ve .png</file>
+    <file>../imagens/Cash-register.32.png</file>
+    <file>../imagens/close.png</file>
+    <file>../imagens/d.png</file>
+    <file>../imagens/despesas.png</file>
+    <file>../imagens/editar (1).png</file>
+    <file>../imagens/excluir-arquivo.png</file>
+    <file>../imagens/guardar-dados.png</file>
+    <file>../imagens/Info.png</file>
+    <file>../imagens/limpar-limpo (1).png</file>
+    <file>../imagens/mais (3).png</file>
+    <file>../imagens/media-floppy.32.png</file>
+    <file>../imagens/MLogo.png</file>
+    <file>../imagens/o-email.png</file>
+    <file>../imagens/painel-de-controle.png</file>
+    <file>../imagens/Produtos.png</file>
+    <file>../imagens/S_Compras.png</file>
+    <file>../imagens/Update.png</file>
+    <file>../imagens/users.png</file>
+    <file>../imagens/vendas.png</file>
+    <file>../imagens/whatsapp-logo.png</file>
+    <file>../imagens/cade.png</file>
+  </qresource>
+</RCC>
