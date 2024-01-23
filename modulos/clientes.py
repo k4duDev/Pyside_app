@@ -11,7 +11,7 @@ from DataBase.DbClientes import Data_Base
 
 
 class Clients(QDialog):
-    def __init__(self,user,autenticado,*args,**argvs):
+    def __init__(self,user,autenticado,diaFormat,*args,**argvs):
         super(Clients, self).__init__(*args,**argvs)
         self.ui = Ui_Clientes()
         self.ui.setupUi(self)
@@ -31,6 +31,7 @@ class Clients(QDialog):
         self.ui.btn_Calendario.clicked.connect(self.Dia)
         self.ui.btn_Voltar.clicked.connect(self.AbrirMenu)       
         self.ui.L_Data
+        self.diaFormat = diaFormat
         self.user = user
         self.autenticado = autenticado
     
@@ -50,7 +51,7 @@ class Clients(QDialog):
 
     def AbrirMenu(self):
         from modulos.menu import Start
-        self.menu = Start(user=(self.user),autenticado=(self.autenticado))
+        self.menu = Start(user=(self.user),autenticado=(self.autenticado),diaFormat=self.diaFormat)
         self.menu.show()
         self.close()
         
@@ -89,7 +90,7 @@ class Clients(QDialog):
         
 
     def Dia(self):
-        self.Dat = Data()   #(self.user,self.autenticado)
+        self.Dat = Data(diaFormat=self.diaFormat)   #(self.user,self.autenticado)
         self.Dat.show ()
         self.Carrega()
 

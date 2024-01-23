@@ -15,6 +15,7 @@ from modulos.calendario import Data
 from template.Menu import Ui_Menu
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from DataBase.DbMenu import Data_Base
 
 class Start(QMainWindow):
@@ -25,14 +26,11 @@ class Start(QMainWindow):
         self.setWindowTitle("Mk.Cosmeticos")
         appIcon = QIcon(u"C:/Projetos de Aplicativos/Mk.Cosmeticos/imagens/MLogo.png")
         self.setWindowIcon(appIcon)
-        #self.dd.cal.Calendario.selectionChanged.connect(self.Form)
-
+        
         self.diaFormat = diaFormat
-        print(diaFormat)
+
 #----------------------   NOME DE USUÁRIO  ----------------------------------------------
 
-        #self.Data = diaFormat
-        #self.ui.L_Data.setText(self.cal.diaFormat)
         self.usuario = user
         self.ui.L_usuario.setEnabled(False)
         self.ui.L_usuario.setText(self.usuario)
@@ -70,11 +68,17 @@ class Start(QMainWindow):
         self.ui.Btn_Produtos.clicked.connect(self.AbrirProdutos)
         self.ui.Btn_Usuarios.clicked.connect(self.AbrirUsuarios)
         self.ui.Btn_Vendas.clicked.connect(self.AbrirVendas)
-        self.ui.Btn_Calen.clicked.connect(self.Dia)
+        self.ui.Btn_Calen.clicked.connect(self.AbrirCalendario)
 
 #-----------------------------   GRAFICOS  -----------------------------
         
         self.Graficos()
+
+# ----------------------------  CALENDARIO  -------------------------------
+        
+        # self.DataAtual()
+        self.Carrega()
+        
 
 #---------------------------   ABRI O PAINEL COM BOTOES    ----------------
 
@@ -98,36 +102,41 @@ class Start(QMainWindow):
 
     def AbrirCad(self):
         self.hide()
-        self.Cli = Clients(user=(self.usuario),autenticado=(self.permissao))
+        
+        self.Cli = Clients(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
         self.Cli.show()
+        
+
+    def AbrirCalendario(self):
+        self.Dat = Data(diaFormat=self.diaFormat)  
+        self.Dat.show ()
+        # self.Carrega()
         
     def AbrirComp(self):
         self.hide()
-        self.Compr = Comp(user=(self.usuario),autenticado=(self.permissao))
+        self.Compr = Comp(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
         self.Compr.show()
 
     def AbrirEstoque(self):
-        self.Est = Estoq()
+        self.hide()
+        self.Est = Estoq(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
         self.Est.show()
 
     def AbrirProdutos(self):
         self.hide()
-        self.Produ = Prod(user=(self.usuario),autenticado=(self.permissao))
+        self.Produ = Prod(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
         self.Produ.show()
 
     def AbrirUsuarios(self):
         self.hide()
-        self.Usu = Users(user=(self.usuario),autenticado=(self.permissao))
+        self.Usu = Users(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
         self.Usu.show()    
 
     def AbrirVendas(self):
-        self.Tela = Vendas(user=(self.usuario),autenticado=(self.permissao))
-        self.Tela.show()
-    
-    def AbrirCalen(self):
         self.hide()
-        self.Calen = Clients(user=(self.usuario),autenticado=(self.permissao))
-        self.Calen.show()
+        self.Tela = Vendas(user=(self.usuario),autenticado=(self.permissao),diaFormat=self.diaFormat)
+        self.Tela.show()
+
 
 # ------------------------- METHOR ABRIR GRAFICOS -------------------
         
@@ -145,84 +154,27 @@ class Start(QMainWindow):
 
         db.close_connect
 
-        jan = 1
-        fev = 2
-        mar = 3
-        abr = 4
-        maio = 5
-        jun = 6
-        jul = 7
-        ago = 8
-        set = 9
-        out = 10
-        nov = 11
-        dez = 12
-
-        if not Clie:
-            pass
-        else:
-            da = np.column_stack(Clie[0][1])
-            print(da)
+        da = pd.DataFrame(Clie)
+        x = da[1]
+        y = da[2]
         
-            for row, i in enumerate(Clie):
-                dados = []
-                dados.append(i)
-                
-                data = dados[0][1]
-                #data = str(data)
-                clientes = []
-                clientes = dados[0][2]
-                #clientes = str(clientes)
-
-        mes = ('jan', 'fev', 'mar', 'abr', 'maio', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez')   
-        #print(data)#, clientes)       
-
         #fig = plt.figure()
-        #fig, ax = plt.subplots()
-        # barras = plt.bar(mes, clientes)
-        # plt.bar_label(barras, labels=[clientes])
-        # plt.title('Clientes Mensal')
-        # plt.ylabel('clientes')
-        # plt.xlabel('Meses')
-        # #ax.plot([data], [clientes])
-        # plt.show()
+        fig, ax = plt.subplots()
+        #ax.plot(x, y, linewidth=2.0)
+        #barras = 
+        plt.bar(x, y)
+        #plt.bar_label(barras)            #, labels=[y,x])
+        plt.title('Clientes Mensal')
+        plt.ylabel('clientes')
+        plt.xlabel('Meses')
+        plt.show()
 
-    def Dia(self):
-        self.Dat = Data(diaFormat = (self.diaFormat))  
-        self.Dat.show ()
-        # self.Carrega()
-        
-    # def Carrega(self):
-    #     #self.di = Calendario()
-        
-    #     self.dd = Data()
-    #     d = str(self.dd.Cal.Calendario.selectedDate())
-    #     self.Form = d[21:33]
-        
-    #     #self.dd.diaFormat = self.dd.Funcao()
-    #     self.ui.L_Data.setText(self.Form) 
-    #     print(self.Form)
-# ------------------------- CALENDARIO -------------------
-
-# class Data(QDialog):
-#     def __init__(self,*args,**argvs):
-#         super(Data, self).__init__(*args,**argvs)
-#         self.Cal = Calendario()
-#         self.Cal.setupUi(self)
-#         self.setWindowTitle("Mk.Cosmeticos")
-#         appIcon = QIcon(u"/imagens/Fundo.png")
-#         self.setWindowIcon(appIcon)
-        
-#         self.Cal.Calendario.selectionChanged.connect(self.Funcao)
-#         #self.ui = Ui_Menu()
-        
-        
-#     def Funcao(self):
-        
-#         self.dia = str(self.Cal.Calendario.selectedDate())
-#         self.diaFormat = self.dia[21:33]
-#         self.Cal.data.setText(self.diaFormat)
-#         #self.ui.L_Data.setText(self.Cal.data)
-#         #return self.diaFormat
-        
+# ------------------------- METHOR CALENDARIO -------------------
+      
+    def Carrega(self):
+        self.dd = Data(diaFormat=self.diaFormat)
+        #self.DataAtual()
+        dia = str(self.dd.Cal.Calendario.selectedDate())
+        self.diaFormat = dia[21:32]
+        self.ui.L_Data.setText(self.diaFormat)
     

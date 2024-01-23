@@ -10,14 +10,15 @@ from DataBase.DbUsers import Data_Base
 
 
 class Users(QDialog):
-    def __init__(self,user,autenticado,*args,**argvs):
-        super(Users, self).__init__(*args,**argvs)
+    def __init__(self,user,autenticado,diaFormat,*args,**kwargs):
+        super(Users, self).__init__(*args,**kwargs)
         self.ui = Ui_Usuarios()
         self.ui.setupUi(self)
         self.setWindowTitle("Mk.Cosmeticos")
         appIcon = QIcon(u"C:/Projetos de Aplicativos/Mk.Cosmeticos/imagens/Fundo.png")
         self.setWindowIcon(appIcon)
 
+        self.diaFormat = diaFormat
         self.user = user
         self.autenticado = autenticado
 
@@ -105,7 +106,7 @@ class Users(QDialog):
 
     def AbrirMenu(self):
         from modulos.menu import Start
-        self.menu = Start(user=(self.user),autenticado=(self.autenticado))
+        self.menu = Start(user=(self.user),autenticado=(self.autenticado),diaFormat=self.diaFormat)
         self.menu.show()
         self.close()
         
@@ -217,17 +218,17 @@ class Users(QDialog):
                     self.ui.Tab_Usuarios.setItem(row, column, QTableWidgetItem(str(data)))
         db.close_connect()
 
-    def Carrega(self):
-        #self.di = Calendario()
-        self.dd = Data()
-        d = str(self.dd.Cal.Calendario.selectedDate())
-        self.Form = d[21:32]
-        #self.dd.diaFormat = self.dd.Funcao()
-        self.ui.L_Data.setText(self.Form)  #(self.diaFormat)
-        print(self.Form)
+    # def Carrega(self):
+    #     #self.di = Calendario()
+    #     self.dd = Data()
+    #     d = str(self.dd.Cal.Calendario.selectedDate())
+    #     self.Form = d[21:32]
+    #     #self.dd.diaFormat = self.dd.Funcao()
+    #     self.ui.L_Data.setText(self.Form)  #(self.diaFormat)
+    #     print(self.Form)
 
     def Dia(self):
-        self.Dat = Data()   #(self.user,self.autenticado)
+        self.Dat = Data(diaFormat=self.diaFormat)   #(self.user,self.autenticado)
         self.Dat.show ()
         self.Carrega()
 

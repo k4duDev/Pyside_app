@@ -10,7 +10,7 @@ from DataBase.DbEstoque import Data_Base
 
 
 class Estoq(QDialog):
-    def __init__(self,*args,**argvs):
+    def __init__(self,user,autenticado,diaFormat,*args,**argvs):
         super(Estoq, self).__init__(*args,**argvs)
         self.ui = Ui_Estoque()
         self.ui.setupUi(self)
@@ -20,7 +20,17 @@ class Estoq(QDialog):
 
         self.table_Estoque()
         #self.Carregadados()
+        self.ui.btn_Voltar.clicked.connect(self.AbrirMenu)
+        self.diaFormat = diaFormat
+        self.user = user
+        self.autenticado = autenticado
+    
 
+    def AbrirMenu(self):
+        from modulos.menu import Start
+        self.menu = Start(user=(self.user),autenticado=(self.autenticado),diaFormat=self.diaFormat)
+        self.menu.show()
+        self.close()
         
     def table_Estoque(self):
 

@@ -9,13 +9,15 @@ from DataBase.DbProduto import Data_Base
 
 
 class Prod(QDialog):
-    def __init__(self,user,autenticado,*args,**argvs):
+    def __init__(self,user,autenticado,diaFormat,*args,**argvs):
         super(Prod, self).__init__(*args,**argvs)
         self.ui = Ui_Produtos()
         self.ui.setupUi(self)
         self.setWindowTitle("Mk.Cosmeticos")
         appIcon = QIcon(u"C:/Projetos de Aplicativos/Mk.Cosmeticos/imagens/Fundo.png")
         self.setWindowIcon(appIcon)
+
+        self.diaFormat = diaFormat
         
         self.ui.L_Id.isEnabled = False
                                         
@@ -40,7 +42,7 @@ class Prod(QDialog):
 
     def AbrirMenu(self):
         from modulos.menu import Start
-        self.menu = Start(user=(self.user),autenticado=(self.autenticado))
+        self.menu = Start(user=(self.user),autenticado=(self.autenticado),diaFormat=self.diaFormat)
         self.menu.show()
         self.close()
         

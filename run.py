@@ -4,6 +4,6 @@ import sys,os
 
 app = QApplication(sys.argv)
 if (QDialog.Accepted == True):
-     window = Inicio()
+     window = Inicio(diaFormat=str())
      window.show()
 sys.exit(app.exec_())

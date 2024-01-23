@@ -11,15 +11,13 @@ class Data(QDialog):
         self.setWindowTitle("Mk.Cosmeticos")
         appIcon = QIcon(u"/imagens/Fundo.png")
         self.setWindowIcon(appIcon)
-        
+
+        self.diaFormat = diaFormat
         self.Cal.Calendario.selectionChanged.connect(self.Funcao)
         
-    def Funcao(self):
+
+    def Funcao(self,):
         
-        self.dia = str(self.Cal.Calendario.selectedDate())
-        self.diaFormat = self.dia[21:33]
+        dia = str(self.Cal.Calendario.selectedDate())
+        self.diaFormat = dia[21:31]
         self.Cal.data.setText(self.diaFormat)
-        #self.ui.L_Data.setText(self.Cal.data)
-        return self.diaFormat
-        
-    

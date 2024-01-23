@@ -8,10 +8,12 @@ from template.Log import Ui_Login
 from modulos.menu import Start
 from DataBase.query import sqlite3_db
 from DataBase.DbUsers import Data_Base
+from modulos.calendario import Data
+import time
 
 
 class Inicio(QDialog): 
-    def __init__(self) -> None:
+    def __init__(self,diaFormat) -> None:
         super(Inicio, self).__init__()
         self.ui = Ui_Login()
         self.tentativas = 0
@@ -21,7 +23,8 @@ class Inicio(QDialog):
         self.setWindowIcon(appIcon)        
 
         self.ui.Btn_Entrar.clicked.connect(self.checkLogin)
-        
+
+        self.diaFormat = diaFormat
 
 #-------------------   VERIFICA USUARIO   -------------------------------
 
@@ -32,9 +35,9 @@ class Inicio(QDialog):
         db = Data_Base()
         db.connect()        
         if self.user == "admin" and self.password == "admin":
-            #QMessageBox.information(QMessageBox(),"Seja Bem Vindo",f" Olá, {self.user} \n \n Login Realizado com Sucesso!")
+            
             self.autenticado = "administrador"
-            self.window = Start(self.user,self.autenticado.lower(),diaFormat = "")
+            self.window = Start(self.user,self.autenticado.lower(),diaFormat=self.diaFormat)
             self.window.show()
             self.hide()
 
@@ -42,8 +45,8 @@ class Inicio(QDialog):
             self.autenticado =  db.check_user(self.user.upper(), self.password)
 
             if self.autenticado.lower() == "administrador" or self.autenticado.lower() == "user":
-                #QMessageBox.information(QMessageBox(),"Seja Bem Vindo", f" Olá, {self.user} \n \n Login Realizado com Sucesso!")
-                self.w = Start(self.user, self.autenticado.lower())
+                
+                self.w = Start(self.user, self.autenticado.lower(),diaFormat=self.diaFormat)
                 self.w.show()
                 self.hide()
             else:
